@@ -1,3 +1,13 @@
+## Prerequesits
+
+You'll need `oxide`, `omnictl`, `kubectl`, `kubectl-oidc_login`, and `talosctl` installed.
+
+Install them with [homebrew](https://brew.sh/) and [bin](https://github.com/marcosnils/bin)
+```bash
+brew install siderolabs/sidero-tools
+bin install oxidecomputer/oxide.rs
+```
+
 ## Create Disk image
 
 Create image cache
@@ -35,16 +45,22 @@ oxide disk import \
     --image-os talos \
     --image-version 1.9.1
 ```
+
+Update instance template with image id
+```bash
+oxide image list --project omni
+```
+
 ## Create Omni cluster
 
 Create the machine class
 ```bash
-omnictl apply -f oxide.mcs.yaml
+omnictl apply -f ./omni/oxide.mcs.yaml
 ```
 
 Create the cluster via template
 ```bash
-omnictl cluster template sync -f oxide.cluster.yaml
+omnictl cluster template sync -f ./omni/oxide.cluster.yaml
 ```
 
 ## Create Oxide instances
@@ -52,7 +68,7 @@ omnictl cluster template sync -f oxide.cluster.yaml
 Adjust seq numbers for how many machines to create.
 Adjust -P for how many calls to create in parallel.
 ```bash
-seq 1 10 | xargs -L 1 -P 5 -- ./create-instance.sh
+seq 1 10 | xargs -L 1 -P 5 -- ./oxide/create-instance.sh
 ```
 
 ## Cleanup
@@ -66,7 +82,7 @@ omnictl delete cluster oxide
 ```bash
 oxide instance list --project omni \
     | jq -r '.[].name' \
-    | xargs -L 1 -P 5 -- ./cleanup-instance.sh
+    | xargs -L 1 -P 5 -- ./oxide/cleanup-instance.sh
 ```
 
 Now delete the links from Omni.
