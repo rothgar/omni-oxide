@@ -1,0 +1,5 @@
+_out
+cache
+images.txt
+talosconfig.yaml
+kubeconfig
