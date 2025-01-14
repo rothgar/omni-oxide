@@ -8,20 +8,31 @@ brew install siderolabs/sidero-tools
 bin install oxidecomputer/oxide.rs
 ```
 
-## Create Disk image
+## Create disk image
+
+We are going to create a disk image using a local [image cache](https://www.talos.dev/v1.9/talos-guides/configuration/image-cache/).
+This will reduce the amount of bandwidth required when creating a cluster but is not required.
 
 Create image cache
 ```bash
 talosctl images default > images.txt
 echo 'registry.k8s.io/pause:3.9' >> images.txt
-cat images.txt | talosctl images cache-create --force --image-cache-path ./cache --images=-
+cat images.txt | talosctl images cache-create \
+    --force --image-cache-path ./cache --images=-
 ```
 Create disk image.
-Make sure to update kernel ARGs from Omni
+Make sure to update kernel ARGs from the Omni home page
 ```bash
 mkdir -p _out/
 OMNI_ARGS="SIDEROLINK_ARGUMENTS_FROM_OMNI"
-docker run --rm -t -v $PWD/cache:/cache/ -v $PWD/_out:/secureboot:ro -v $PWD/_out:/out -v /dev:/dev --privileged ghcr.io/siderolabs/imager:v1.9.1 iso --image-cache /cache/ --extra-kernel-arg "$OMNI_ARGS talos.dashboard.disabled=1 console=ttyS0" --image-disk-size=4GB
+docker run --rm -t -v $PWD/cache:/cache/ \
+    -v $PWD/_out:/secureboot:ro \
+    -v $PWD/_out:/out \
+    -v /dev:/dev \
+    --privileged ghcr.io/siderolabs/imager:v1.9.1 \
+      iso --image-cache /cache/ \
+      --extra-kernel-arg "$OMNI_ARGS talos.dashboard.disabled=1 console=ttyS0" \
+      --image-disk-size=4GB
 ```
 
 Unpack the image
@@ -30,7 +41,8 @@ Unpack the image
 zstd -d _out/metal-amd64.raw.zst
 ```
 
-Upload the disk image to Oxide
+Upload the disk image to Oxide.
+This assumes you've already create a project named "omni"
 
 ```bash
 oxide disk import \
