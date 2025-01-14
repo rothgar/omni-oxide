@@ -1,0 +1,23 @@
+kind: Cluster
+name: oxide
+kubernetes:
+  version: v1.32.0
+talos:
+  version: v1.9.1
+patches:
+  - idOverride: 200-oxide
+    inline:
+      machine:
+        features:
+          imageCache:
+            localEnabled: true
+---
+kind: ControlPlane
+machineClass:
+  name: metal
+  size: 3
+---
+kind: Workers
+machineClass:
+  name: metal
+  size: Unlimited

@@ -1,0 +1,8 @@
+metadata:
+    namespace: default
+    type: MachineClasses.omni.sidero.dev
+    id: metal
+spec:
+    matchlabels:
+        - omni.sidero.dev/platform = metal
+    autoprovision: null

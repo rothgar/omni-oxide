@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: pause
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: pause
+  template:
+    metadata:
+      labels:
+        app: pause
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - name: pause
+        image: registry.k8s.io/pause:3.9
+        securityContext:
+          runAsNonRoot: true
+          capabilities:
+            drop:
+            - ALL  # Drop all capabilities
+          seccompProfile:
+            type: RuntimeDefault
+          allowPrivilegeEscalation: false 

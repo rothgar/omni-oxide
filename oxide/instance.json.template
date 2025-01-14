@@ -1,0 +1,20 @@
+{
+  "name": "talos-${i}",
+  "description": "Node for Talos cluster",
+  "boot_disk": {
+    "type": "create",
+    "name": "talos-${i}-boot",
+    "size": 8589934592,
+    "description": "Created from talos 1.9.1 image",
+    "disk_source": {
+      "type": "image",
+      "image_id": "0ac34f8d-2236-40ec-9e8c-d0629519490a"
+    }
+  },
+  "hostname": "talos-${i}",
+  "ncpus": 2,
+  "memory": 4294967296,
+  "network_interfaces": {
+    "type": "default"
+  }
+}
