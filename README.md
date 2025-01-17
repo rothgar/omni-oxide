@@ -30,7 +30,7 @@ docker run --rm -t -v $PWD/cache:/cache/ \
     -v $PWD/_out:/out \
     -v /dev:/dev \
     --privileged ghcr.io/siderolabs/imager:v1.9.1 \
-      iso --image-cache /cache/ \
+      metal --image-cache /cache/ \
       --extra-kernel-arg "$OMNI_ARGS talos.dashboard.disabled=1 console=ttyS0" \
       --image-disk-size=4GB
 ```
