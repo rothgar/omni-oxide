@@ -29,7 +29,7 @@ docker run --rm -t -v $PWD/cache:/cache/ \
     -v $PWD/_out:/secureboot:ro \
     -v $PWD/_out:/out \
     -v /dev:/dev \
-    --privileged ghcr.io/siderolabs/imager:v1.9.1 \
+    --privileged ghcr.io/siderolabs/imager:v1.9.4 \
       metal --image-cache /cache/ \
       --extra-kernel-arg "$OMNI_ARGS talos.dashboard.disabled=1 console=ttyS0" \
       --image-disk-size=4GB
@@ -55,7 +55,7 @@ oxide disk import \
     --image talos-191 \
     --image-description "Talos with Omni config" \
     --image-os talos \
-    --image-version 1.9.1
+    --image-version 1.9.4
 ```
 
 Update instance template with image id
