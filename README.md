@@ -1,4 +1,4 @@
-## Prerequesits
+## Prerequisites
 
 You'll need `oxide`, `omnictl`, `kubectl`, `kubectl-oidc_login`, and `talosctl` installed.
 
